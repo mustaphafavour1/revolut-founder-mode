@@ -55,7 +55,11 @@ export default function AboutDesigner() {
                 letterSpacing: "-0.03em",
               }}
             >
-              Built by someone who uses products like this.
+              Built by someone
+              <br />
+              who uses products
+              <br />
+              like this.
             </motion.h2>
           </div>
 

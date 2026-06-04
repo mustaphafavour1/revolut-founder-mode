@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -10,16 +10,26 @@ const MAILTO =
   "mailto:mustaphafavour1@gmail.com?subject=Founder%20Mode%20Case%20Study%20%E2%80%94%20Revolut%20Business%20Concept&body=Hi%20Favour%2C%0A%0AI%20came%20across%20your%20Revolut%20Business%20Founder%20Mode%20concept%20and%20would%20love%20to%20learn%20more%20about%20the%20case%20study.%0A%0A";
 
 const screens: { label: string; image: string; tilt: number }[] = [
-  { label: "Dashboard", image: "/images/home.png", tilt: 4 },
-  { label: "Payments", image: "/images/payments.png", tilt: -3 },
-  { label: "Vaults", image: "/images/vaults.png", tilt: 5 },
-  { label: "Forecast", image: "/images/cashflow.png", tilt: -4 },
-  { label: "Team", image: "/images/teamscards.png", tilt: 3 },
-  { label: "Invoices", image: "/images/invoices.png", tilt: -5 },
-  { label: "Onboarding", image: "/images/profile.png", tilt: 4 },
+  { label: "Dashboard",   image: "/images/home.png",       tilt: 4  },
+  { label: "Payments",    image: "/images/payments.png",   tilt: -3 },
+  { label: "Vaults",      image: "/images/vaults.png",     tilt: 5  },
+  { label: "Forecast",    image: "/images/cashflow.png",   tilt: -4 },
+  { label: "Team",        image: "/images/teamscards.png", tilt: 3  },
+  { label: "Invoices",    image: "/images/invoices.png",   tilt: -5 },
+  { label: "Onboarding",  image: "/images/profile.png",    tilt: 4  },
 ];
 
-function ScreenPill({ label, image, tilt, delay }: { label: string; image: string; tilt: number; delay: number }) {
+function ScreenPill({
+  label,
+  image,
+  tilt,
+  delay,
+}: {
+  label: string;
+  image: string;
+  tilt: number;
+  delay: number;
+}) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -51,14 +61,14 @@ function ScreenPill({ label, image, tilt, delay }: { label: string; image: strin
             background: "#6366f1",
             borderRadius: "2px",
             margin: "0 auto 8px",
-            opacity: hovered ? 1 : 0.6,
+            opacity: hovered ? 1 : 0.55,
             transition: "opacity 0.2s",
           }}
         />
         <p
           style={{
             fontSize: "0.58rem",
-            color: hovered ? "#a3a3a3" : "#737373",
+            color: hovered ? "#c0c0c0" : "#737373",
             fontWeight: 500,
             letterSpacing: "0.06em",
             textTransform: "uppercase",
@@ -69,23 +79,23 @@ function ScreenPill({ label, image, tilt, delay }: { label: string; image: strin
         </p>
       </div>
 
-      {/* Hover image popover */}
+      {/* Hover image popover — 65% of viewport height */}
       <div
         style={{
           position: "absolute",
-          bottom: "calc(100% + 12px)",
+          bottom: "calc(100% + 14px)",
           left: "50%",
-          zIndex: 100,
+          zIndex: 200,
           pointerEvents: "none",
         }}
       >
         <AnimatePresence>
           {hovered && (
             <motion.div
-              initial={{ opacity: 0, y: 8, scale: 0.88 }}
+              initial={{ opacity: 0, y: 10, scale: 0.88 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 8, scale: 0.88 }}
-              transition={{ duration: 0.2, ease }}
+              exit={{ opacity: 0, y: 10, scale: 0.88 }}
+              transition={{ duration: 0.22, ease }}
               style={{
                 x: "-50%",
                 rotate: tilt,
@@ -95,12 +105,15 @@ function ScreenPill({ label, image, tilt, delay }: { label: string; image: strin
               <Image
                 src={image}
                 alt={`${label} screen`}
-                width={130}
-                height={260}
+                width={400}
+                height={820}
                 style={{
                   objectFit: "contain",
                   display: "block",
-                  filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.08))",
+                  height: "clamp(320px, 65vh, 700px)",
+                  width: "auto",
+                  filter:
+                    "drop-shadow(0 24px 60px rgba(0,0,0,0.85)) drop-shadow(0 0 1px rgba(255,255,255,0.06))",
                 }}
               />
             </motion.div>
@@ -112,20 +125,25 @@ function ScreenPill({ label, image, tilt, delay }: { label: string; image: strin
 }
 
 export default function DesignApproach() {
+  // Preload all screen images so hover feels instant
+  useEffect(() => {
+    screens.forEach(({ image }) => {
+      const img = new window.Image();
+      img.src = image;
+    });
+  }, []);
+
   return (
-    <section
-      style={{ padding: "160px 24px", borderTop: "1px solid #1f1f1f" }}
-    >
+    <section style={{ padding: "160px 24px", borderTop: "1px solid #1f1f1f" }}>
       <div
         className="approach-grid"
         style={{
           maxWidth: "1200px",
-          margin: "0 auto",
+          margin: "0 auto 80px",
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: "80px",
           alignItems: "start",
-          marginBottom: "80px",
         }}
       >
         {/* Left */}
@@ -181,7 +199,8 @@ export default function DesignApproach() {
               marginBottom: "20px",
             }}
           >
-            7 screens chosen for the moments founders lose time, miss signals, or make calls on incomplete data. Each solves a specific failure.
+            7 screens chosen for the moments founders lose time, miss signals,
+            or make calls on incomplete data. Each solves a specific failure.
           </motion.p>
 
           <motion.p
@@ -196,7 +215,9 @@ export default function DesignApproach() {
               marginBottom: "36px",
             }}
           >
-            The visual language stays inside Revolut&apos;s system. The best product design is invisible — you feel the clarity before you notice the interface.
+            The visual language stays inside Revolut&apos;s system. The best
+            product design is invisible — you feel the clarity before you notice
+            the interface.
           </motion.p>
 
           <motion.a
@@ -215,8 +236,12 @@ export default function DesignApproach() {
               textDecoration: "none",
               transition: "gap 0.2s",
             }}
-            onMouseEnter={(e) => { (e.currentTarget).style.gap = "12px"; }}
-            onMouseLeave={(e) => { (e.currentTarget).style.gap = "8px"; }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.gap = "12px";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.gap = "8px";
+            }}
           >
             Reach out for more info
             <span style={{ fontSize: "1rem" }}>→</span>
@@ -224,7 +249,7 @@ export default function DesignApproach() {
         </div>
       </div>
 
-      {/* Screen pills with hover previews */}
+      {/* Screen pills — hover reveals tilted screen preview */}
       <div
         className="screen-pills"
         style={{
@@ -233,16 +258,21 @@ export default function DesignApproach() {
           display: "grid",
           gridTemplateColumns: "repeat(7, 1fr)",
           gap: "8px",
-          paddingBottom: "80px",
         }}
       >
         {screens.map((s, i) => (
-          <ScreenPill key={s.label} label={s.label} image={s.image} tilt={s.tilt} delay={i * 0.06} />
+          <ScreenPill
+            key={s.label}
+            label={s.label}
+            image={s.image}
+            tilt={s.tilt}
+            delay={i * 0.06}
+          />
         ))}
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
           .approach-grid {
             grid-template-columns: 1fr !important;
             gap: 40px !important;

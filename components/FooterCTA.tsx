@@ -82,22 +82,22 @@ export default function FooterCTA() {
               alignItems: "center",
               gap: "8px",
               padding: "14px 28px",
-              background: "#6366f1",
-              color: "#fff",
+              background: "#ffffff",
+              color: "#0a0a0a",
               fontSize: "0.88rem",
-              fontWeight: 600,
+              fontWeight: 700,
               borderRadius: "999px",
               textDecoration: "none",
               transition: "background 0.2s, transform 0.15s",
               letterSpacing: "0.01em",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#5254cc";
+              (e.currentTarget as HTMLElement).style.background = "#e5e5e5";
               (e.currentTarget as HTMLElement).style.transform =
                 "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "#6366f1";
+              (e.currentTarget as HTMLElement).style.background = "#ffffff";
               (e.currentTarget as HTMLElement).style.transform =
                 "translateY(0)";
             }}

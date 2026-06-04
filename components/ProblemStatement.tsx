@@ -1,11 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 const problems = [
   {
     label: "Onboarding drops off early",
-    desc: "Complex verification, no clear progress signal.",
+    desc: "Complex verification. No clear progress signal.",
   },
   {
     label: "Cash flow is invisible",
@@ -15,17 +16,50 @@ const problems = [
     label: "Savings feel like an afterthought",
     desc: "Vaults without intent, rules, or context.",
   },
+  {
+    label: "Decision-making is reactive",
+    desc: "No forward-looking signals. Calls made after the fact.",
+  },
 ];
 
-const ease = [0.25, 0.46, 0.45, 0.94] as const;
-
-const desktopCardStyles: React.CSSProperties[] = [
-  { position: "absolute", top: 0, right: 0, transform: "rotate(1.5deg)" },
-  { position: "absolute", top: "160px", left: 0, transform: "rotate(-1deg)" },
-  { position: "absolute", bottom: 0, right: "60px", transform: "rotate(1.2deg)" },
+// Final absolute positions on desktop
+const finalPositions: React.CSSProperties[] = [
+  { top: "10px", right: "0px" },           // top-right
+  { top: "130px", left: "0px" },           // left-middle
+  { bottom: "10px", right: "80px" },       // bottom-right
+  { top: "110px", left: "calc(50% - 120px)" }, // centre
 ];
+
+// Constant card rotations (Framer Motion rotate prop)
+const rotations = [1.8, -1.2, 1.4, -0.6];
+
+// Initial scatter offsets — each card starts displaced so all overlap near the centre
+const fromOffsets = [
+  { x: -310, y: 100 },  // top-right card: starts shifted left + down toward centre
+  { x: 240, y: -40 },   // left-middle card: starts shifted right toward centre
+  { x: -260, y: -110 }, // bottom-right card: starts shifted left + up toward centre
+  { x: 10, y: 20 },     // centre card: barely moves
+];
+
+const ease = [0.22, 0.68, 0.35, 1.05] as const; // spring-ish
+
+const cardStyle: React.CSSProperties = {
+  position: "absolute",
+  width: "232px",
+  background: "#111111",
+  border: "1px solid #1f1f1f",
+  borderLeft: "2px solid rgba(239,68,68,0.45)",
+  borderRadius: "14px",
+  padding: "18px 20px",
+  textAlign: "left",
+};
 
 export default function ProblemStatement() {
+  const scatterRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(scatterRef, { once: true, margin: "-80px" });
+
+  const ease2 = [0.25, 0.46, 0.45, 0.94] as const;
+
   return (
     <section
       id="problem"
@@ -37,7 +71,7 @@ export default function ProblemStatement() {
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5, ease }}
+          transition={{ duration: 0.5, ease: ease2 }}
           style={{
             fontSize: "0.65rem",
             fontWeight: 700,
@@ -55,7 +89,7 @@ export default function ProblemStatement() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65, delay: 0.1, ease }}
+          transition={{ duration: 0.65, delay: 0.1, ease: ease2 }}
           style={{
             fontSize: "clamp(2rem, 4vw, 3rem)",
             fontWeight: 800,
@@ -71,9 +105,9 @@ export default function ProblemStatement() {
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, delay: 0.18, ease }}
+          transition={{ duration: 0.6, delay: 0.18, ease: ease2 }}
           style={{
-            fontSize: "clamp(1.1rem, 2.5vw, 1.45rem)",
+            fontSize: "clamp(1.05rem, 2.2vw, 1.35rem)",
             fontWeight: 600,
             color: "#a3a3a3",
             marginBottom: "24px",
@@ -88,7 +122,7 @@ export default function ProblemStatement() {
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65, delay: 0.24, ease }}
+          transition={{ duration: 0.65, delay: 0.24, ease: ease2 }}
           style={{
             fontSize: "0.95rem",
             color: "#737373",
@@ -97,31 +131,36 @@ export default function ProblemStatement() {
             margin: "0 auto",
           }}
         >
-          The tools exist. But the experience is built for a finance controller, not a founder doing five things at once.
+          The tools exist. But the experience is built for a finance controller,
+          not a founder doing five things at once.
         </motion.p>
 
-        {/* Desktop: scattered cards */}
+        {/* ─── Desktop: cards scatter from centre on enter ─── */}
         <div
+          ref={scatterRef}
           className="problem-scatter"
-          style={{ position: "relative", height: "380px", marginTop: "72px" }}
+          style={{ position: "relative", height: "420px", marginTop: "72px" }}
         >
           {problems.map((p, i) => (
             <motion.div
               key={p.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: 0.1 + i * 0.12, ease }}
-              style={{
-                ...desktopCardStyles[i],
-                width: "240px",
-                background: "#111111",
-                border: "1px solid #1f1f1f",
-                borderLeft: "2px solid #ef444470",
-                borderRadius: "14px",
-                padding: "18px 20px",
-                textAlign: "left",
+              animate={
+                isInView
+                  ? { x: 0, y: 0, opacity: 1, scale: 1, rotate: rotations[i] }
+                  : {
+                      x: fromOffsets[i].x,
+                      y: fromOffsets[i].y,
+                      opacity: 0,
+                      scale: 0.82,
+                      rotate: 0,
+                    }
+              }
+              transition={{
+                duration: 0.7,
+                delay: i * 0.09,
+                ease,
               }}
+              style={{ ...cardStyle, ...finalPositions[i] }}
             >
               <div
                 style={{
@@ -130,10 +169,74 @@ export default function ProblemStatement() {
                   borderRadius: "50%",
                   background: "#ef4444",
                   marginBottom: "12px",
-                  opacity: 0.75,
+                  opacity: 0.7,
                 }}
               />
-              <p style={{ fontSize: "0.82rem", fontWeight: 600, color: "#fff", marginBottom: "6px", lineHeight: 1.3 }}>
+              <p
+                style={{
+                  fontSize: "0.82rem",
+                  fontWeight: 600,
+                  color: "#fff",
+                  marginBottom: "6px",
+                  lineHeight: 1.3,
+                }}
+              >
+                {p.label}
+              </p>
+              <p
+                style={{ fontSize: "0.75rem", color: "#737373", lineHeight: 1.6 }}
+              >
+                {p.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* ─── Mobile: vertical stack ─── */}
+        <div
+          className="problem-stack"
+          style={{
+            display: "none",
+            flexDirection: "column",
+            gap: "12px",
+            marginTop: "48px",
+            textAlign: "left",
+          }}
+        >
+          {problems.map((p, i) => (
+            <motion.div
+              key={p.label}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: ease2 }}
+              style={{
+                background: "#111111",
+                border: "1px solid #1f1f1f",
+                borderLeft: "2px solid rgba(239,68,68,0.45)",
+                borderRadius: "14px",
+                padding: "18px 20px",
+              }}
+            >
+              <div
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  borderRadius: "50%",
+                  background: "#ef4444",
+                  marginBottom: "10px",
+                  opacity: 0.7,
+                }}
+              />
+              <p
+                style={{
+                  fontSize: "0.82rem",
+                  fontWeight: 600,
+                  color: "#fff",
+                  marginBottom: "6px",
+                  lineHeight: 1.3,
+                }}
+              >
                 {p.label}
               </p>
               <p style={{ fontSize: "0.75rem", color: "#737373", lineHeight: 1.6 }}>
@@ -142,41 +245,12 @@ export default function ProblemStatement() {
             </motion.div>
           ))}
         </div>
-
-        {/* Mobile: stacked cards */}
-        <div className="problem-stack" style={{ display: "none", flexDirection: "column", gap: "12px", marginTop: "48px" }}>
-          {problems.map((p, i) => (
-            <motion.div
-              key={p.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.1, ease }}
-              style={{
-                background: "#111111",
-                border: "1px solid #1f1f1f",
-                borderLeft: "2px solid #ef444470",
-                borderRadius: "14px",
-                padding: "18px 20px",
-                textAlign: "left",
-              }}
-            >
-              <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#ef4444", marginBottom: "10px", opacity: 0.75 }} />
-              <p style={{ fontSize: "0.82rem", fontWeight: 600, color: "#fff", marginBottom: "6px", lineHeight: 1.3 }}>{p.label}</p>
-              <p style={{ fontSize: "0.75rem", color: "#737373", lineHeight: 1.6 }}>{p.desc}</p>
-            </motion.div>
-          ))}
-        </div>
       </div>
 
       <style>{`
         @media (max-width: 768px) {
-          .problem-scatter {
-            display: none !important;
-          }
-          .problem-stack {
-            display: flex !important;
-          }
+          .problem-scatter { display: none !important; }
+          .problem-stack   { display: flex !important; }
         }
       `}</style>
     </section>

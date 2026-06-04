@@ -18,6 +18,14 @@ function PhoneCarousel() {
   const [index, setIndex] = useState(0);
   const [dir, setDir] = useState(1);
 
+  // Preload all images immediately on mount so swaps feel instant
+  useEffect(() => {
+    carouselImages.forEach(({ src }) => {
+      const img = new window.Image();
+      img.src = src;
+    });
+  }, []);
+
   useEffect(() => {
     const id = setInterval(() => {
       setDir(1);
@@ -27,9 +35,21 @@ function PhoneCarousel() {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px" }}>
-      {/* 3D phone frame */}
-      <div style={{ perspective: "1100px" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "20px",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      {/* Fixed-size 3D viewport — never changes size, preventing layout shift */}
+      <div
+        className="carousel-viewport"
+        style={{ position: "relative", perspective: "1100px", flexShrink: 0 }}
+      >
         <AnimatePresence mode="wait" custom={dir}>
           <motion.div
             key={index}
@@ -44,18 +64,21 @@ function PhoneCarousel() {
             exit="exit"
             transition={{ duration: 0.55, ease }}
             style={{
+              position: "absolute",
+              inset: 0,
               transformStyle: "preserve-3d",
-              cursor: "default",
-              filter: "drop-shadow(0 48px 80px rgba(0,0,0,0.65)) drop-shadow(0 0 40px rgba(99,102,241,0.12))",
             }}
           >
             <Image
               src={carouselImages[index].src}
               alt={carouselImages[index].label}
-              width={280}
-              height={560}
-              style={{ objectFit: "contain", display: "block" }}
-              priority={index === 0}
+              fill
+              style={{
+                objectFit: "contain",
+                filter:
+                  "drop-shadow(0 40px 70px rgba(0,0,0,0.6)) drop-shadow(0 0 40px rgba(99,102,241,0.1))",
+              }}
+              priority
             />
           </motion.div>
         </AnimatePresence>
@@ -66,12 +89,15 @@ function PhoneCarousel() {
         {carouselImages.map((_, i) => (
           <button
             key={i}
-            onClick={() => { setDir(i > index ? 1 : -1); setIndex(i); }}
+            onClick={() => {
+              setDir(i > index ? 1 : -1);
+              setIndex(i);
+            }}
             style={{
               width: i === index ? "18px" : "6px",
               height: "6px",
               borderRadius: "999px",
-              background: i === index ? "#6366f1" : "#2a2a2a",
+              background: i === index ? "#ffffff" : "#2a2a2a",
               border: "none",
               padding: 0,
               cursor: "pointer",
@@ -87,9 +113,21 @@ function PhoneCarousel() {
 
 export default function Hero() {
   return (
-    <section style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
+    <section
+      style={{
+        position: "relative",
+        minHeight: "100vh",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        paddingTop: "64px", // nav height offset
+      }}
+    >
       {/* Ambient blobs */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}>
+      <div
+        style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}
+      >
         <div
           style={{
             position: "absolute",
@@ -97,7 +135,8 @@ export default function Hero() {
             right: "8%",
             width: "520px",
             height: "520px",
-            background: "radial-gradient(circle, rgba(99,102,241,0.11), transparent 70%)",
+            background:
+              "radial-gradient(circle, rgba(99,102,241,0.11), transparent 70%)",
             filter: "blur(48px)",
           }}
         />
@@ -108,7 +147,8 @@ export default function Hero() {
             left: "3%",
             width: "340px",
             height: "340px",
-            background: "radial-gradient(circle, rgba(25,28,130,0.16), transparent 70%)",
+            background:
+              "radial-gradient(circle, rgba(25,28,130,0.16), transparent 70%)",
             filter: "blur(64px)",
           }}
         />
@@ -119,35 +159,63 @@ export default function Hero() {
         style={{
           position: "relative",
           zIndex: 1,
-          maxWidth: "1200px",
+          maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 24px",
-          paddingTop: "130px",
-          paddingBottom: "120px",
+          padding: "40px 40px",
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
-          gap: "64px",
+          gap: "48px",
           alignItems: "center",
+          width: "100%",
         }}
       >
-        {/* Left: copy */}
+        {/* Left: copy — independent of image column height */}
         <div>
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.08, ease }}
-            style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "36px" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              marginBottom: "36px",
+            }}
           >
-            <span style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#737373" }}>
+            <span
+              style={{
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#737373",
+              }}
+            >
               Revolut Business
             </span>
             <span style={{ color: "#6366f1", fontSize: "0.9rem" }}>→</span>
-            <span style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#6366f1" }}>
+            <span
+              style={{
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#6366f1",
+              }}
+            >
               Concept by HeadFavour
             </span>
           </motion.div>
 
-          <h1 style={{ fontSize: "clamp(2.6rem, 5vw, 4.2rem)", fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: "24px" }}>
+          <h1
+            style={{
+              fontSize: "clamp(2.6rem, 5vw, 4.2rem)",
+              fontWeight: 800,
+              lineHeight: 1.05,
+              letterSpacing: "-0.03em",
+              marginBottom: "24px",
+            }}
+          >
             {heroLines.map((line, i) => (
               <motion.span
                 key={i}
@@ -165,7 +233,13 @@ export default function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.62, ease }}
-            style={{ fontSize: "1rem", color: "#a3a3a3", lineHeight: 1.7, maxWidth: "400px", marginBottom: "40px" }}
+            style={{
+              fontSize: "1rem",
+              color: "#a3a3a3",
+              lineHeight: 1.7,
+              maxWidth: "400px",
+              marginBottom: "40px",
+            }}
           >
             Smarter financial clarity for the people who actually own the thing.
           </motion.p>
@@ -176,33 +250,36 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.8, ease }}
             style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}
           >
+            {/* Primary — white */}
             <a
               href="#concept"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 padding: "12px 24px",
-                background: "#6366f1",
-                color: "#fff",
+                background: "#ffffff",
+                color: "#0a0a0a",
                 fontSize: "0.85rem",
-                fontWeight: 600,
+                fontWeight: 700,
                 borderRadius: "999px",
                 textDecoration: "none",
                 transition: "background 0.2s, transform 0.15s",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget).style.background = "#5254cc";
-                (e.currentTarget).style.transform = "translateY(-1px)";
+                e.currentTarget.style.background = "#e5e5e5";
+                e.currentTarget.style.transform = "translateY(-1px)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget).style.background = "#6366f1";
-                (e.currentTarget).style.transform = "translateY(0)";
+                e.currentTarget.style.background = "#ffffff";
+                e.currentTarget.style.transform = "translateY(0)";
               }}
             >
               Explore the Concept
             </a>
+
+            {/* Secondary — outline */}
             <a
-              href={`mailto:mustaphafavour1@gmail.com?subject=Founder%20Mode%20Case%20Study&body=Hi%20Favour%2C%0A%0AI%20saw%20your%20Revolut%20Business%20Founder%20Mode%20concept%20and%20would%20love%20to%20learn%20more.%0A%0A`}
+              href="mailto:mustaphafavour1@gmail.com?subject=Founder%20Mode%20Case%20Study&body=Hi%20Favour%2C%0A%0AI%20saw%20your%20Revolut%20Business%20Founder%20Mode%20concept%20and%20would%20love%20to%20learn%20more.%0A%0A"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -217,12 +294,12 @@ export default function Hero() {
                 transition: "border-color 0.2s, transform 0.15s",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget).style.borderColor = "#6366f1";
-                (e.currentTarget).style.transform = "translateY(-1px)";
+                e.currentTarget.style.borderColor = "#737373";
+                e.currentTarget.style.transform = "translateY(-1px)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget).style.borderColor = "#2a2a2a";
-                (e.currentTarget).style.transform = "translateY(0)";
+                e.currentTarget.style.borderColor = "#2a2a2a";
+                e.currentTarget.style.transform = "translateY(0)";
               }}
             >
               Reach out for more info
@@ -230,28 +307,51 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right: 3D phone carousel */}
+        {/* Right: fixed-height column — image never causes text to shift */}
         <motion.div
-          initial={{ opacity: 0, x: 40, y: 10 }}
+          initial={{ opacity: 0, x: 32, y: 8 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 1, delay: 0.4, ease }}
+          transition={{ duration: 1, delay: 0.35, ease }}
           className="hero-mockup"
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
           <PhoneCarousel />
         </motion.div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        /* carousel-viewport: fixed CSS dimensions — never reflows */
+        .carousel-viewport {
+          width: calc(75vh * 0.46);
+          height: 75vh;
+          max-height: 820px;
+          max-width: 380px;
+        }
+
+        @media (max-width: 900px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
-            padding-top: 100px !important;
-            padding-bottom: 80px !important;
-            gap: 56px !important;
+            padding: 32px 24px !important;
+            gap: 40px !important;
           }
-          .hero-mockup {
-            justify-content: center;
+          .carousel-viewport {
+            width: calc(58vh * 0.46);
+            height: 58vh;
+            max-height: 480px;
+            max-width: 240px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .carousel-viewport {
+            width: calc(55vw);
+            height: calc(55vw * 2.17);
+            max-height: 380px;
+            max-width: 175px;
           }
         }
       `}</style>
