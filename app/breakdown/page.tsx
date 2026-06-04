@@ -28,19 +28,19 @@ const screens: ScreenData[] = [
     tilt: 3,
     short: "The command centre. Everything a founder needs, decided in under 10 seconds.",
     detail:
-      "The Home screen replaces the traditional account summary with a decision-ready overview. A Health Score surfaces the three most critical signals — runway, pending invoices, and card utilisation — so you know where attention is needed without digging through sub-menus. A Smart Nudge module surfaces one time-sensitive action per session, reducing the cognitive overhead of a long to-do list. The layout follows an F-pattern scan path: critical numbers top-left, quick actions top-right, and recent activity scrollable below. Every element earns its place by saving a decision.",
+      "The Home screen replaces the account summary with a decision-ready overview. A Health Score surfaces three signals — runway, pending invoices, and card utilisation — in one number. A Smart Nudge surfaces one time-sensitive action per session. Layout follows an F-pattern: critical numbers top-left, quick actions top-right, activity below.",
     annotations: [
       {
         label: "Health Score",
-        text: "A composite signal combining runway days, overdue receivables, and spend vs. budget. Colour-coded green above 70, amber 40–70, red below 40 — so the headline number tells the story before you read a single line.",
+        text: "Combines runway days, overdue receivables, and spend vs. budget. Green above 70, amber 40–70, red below 40.",
       },
       {
         label: "Smart Nudge",
-        text: "One surfaced action per session, ranked by recency and financial impact. Founders make better calls when the system picks the most important next step rather than presenting everything at once.",
+        text: "One surfaced action per session, ranked by recency and financial impact. Fewer choices, better calls.",
       },
       {
         label: "F-Pattern Layout",
-        text: "Content is positioned along the natural F-shaped scan path. Critical numbers land top-left, quick actions top-right, and the activity feed scrolls below — the eye reaches the most important data without deliberate effort.",
+        text: "Critical numbers land top-left, quick actions right, activity feed below. The eye reaches the most important data first.",
       },
     ],
   },
@@ -52,19 +52,19 @@ const screens: ScreenData[] = [
     tilt: -3,
     short: "Pay multiple people at once. Queue what's coming. Never miss a recurring bill.",
     detail:
-      "The Payments screen is rebuilt around batch and scheduled workflows. Select multiple recipients, set individual amounts and references, and send them all in one confirmation step. A scheduling layer lets founders queue payments up to 90 days ahead, removing the mental overhead of remembering rent, subscriptions, or supplier due dates. Recurring payments are a first-class feature — set a frequency, a start date, and the system handles every subsequent transfer. Frequent and favourite recipients surface automatically so common payments take a single tap, not five.",
+      "The Payments screen is built around batch and scheduled workflows. Select multiple recipients, set individual amounts, and send in one confirmation step. A scheduling layer queues payments up to 90 days ahead. Recurring payments have a first-class flow — set a frequency and start date, the system handles the rest.",
     annotations: [
       {
         label: "Batch Send",
-        text: "Select 2–10 recipients in a single flow. Review all amounts before confirming. One submission, one record in the activity feed — no repetition, no tab-switching.",
+        text: "2–10 recipients in one flow. One submission, one record in the feed — no repetition.",
       },
       {
         label: "Scheduled Payments",
-        text: "Queue a payment up to 90 days ahead with a date stamp. It appears in the activity feed as 'Scheduled' so nothing gets missed, double-paid, or forgotten when the month gets busy.",
+        text: "Queue a payment up to 90 days ahead. Date-stamped so nothing gets missed or double-paid.",
       },
       {
         label: "Smart Recents",
-        text: "The five most-used recipients surface automatically at the top of the flow. Routine payments — team members, regular suppliers, platform fees — are a single tap away.",
+        text: "The five most-used recipients surface automatically. Routine payments are a single tap.",
       },
     ],
   },
@@ -76,19 +76,19 @@ const screens: ScreenData[] = [
     tilt: 4,
     short: "Savings that work toward something, not just sit somewhere.",
     detail:
-      "Vaults are reimagined as goal-based savings accounts with built-in automation. Each Vault carries a name, a target amount, a deadline, and an auto-sweep rule. When the main account balance exceeds a defined threshold, the overflow moves automatically into the right Vault — saving happens without requiring a decision in the moment. Progress rings visualise completion toward each Vault's target, making savings feel motivating rather than administrative. At 80% progress the ring shifts to amber, prompting a top-up before the deadline without a notification flood.",
+      "Each Vault has a name, a target, a deadline, and an auto-sweep rule. When the main balance exceeds a set threshold, overflow moves into the right Vault automatically — saving happens without a decision. Progress rings visualise completion, making it feel purposeful rather than administrative.",
     annotations: [
       {
         label: "Named Vaults",
-        text: "Naming a savings pot changes the psychology. 'Tax Reserve' feels distinct from 'Emergency Buffer' — money with a label is money less likely to be spent impulsively.",
+        text: "Naming a pot changes the psychology. 'Tax Reserve' is money less likely to be spent impulsively.",
       },
       {
         label: "Auto-Sweep Rules",
-        text: "Set a balance threshold on the main account. Any balance above it sweeps into a designated Vault automatically. The discipline is built into the system, not into the founder's memory.",
+        text: "Any balance above the threshold sweeps automatically. The discipline is in the system, not the founder's memory.",
       },
       {
         label: "Progress Rings",
-        text: "Visual completion indicators tied to each Vault's target. A ring turning amber at 80% provides a soft prompt without a hard notification — useful without being noisy.",
+        text: "Visual completion toward each target. Turns amber at 80% — a soft prompt without a notification.",
       },
     ],
   },
@@ -100,19 +100,19 @@ const screens: ScreenData[] = [
     tilt: -4,
     short: "See 90 days ahead. Stop making financial decisions in the dark.",
     detail:
-      "The Forecast screen replaces the running balance with a forward-looking timeline. Projected income and committed expenses are plotted on a 30, 60, and 90-day horizon. Risk events — low-balance warnings, large outgoing payments, invoice payment gaps — appear as named markers directly on the timeline rather than buried inside a transaction log. Founders can run a simple what-if: drag a committed expense earlier or later in the timeline and watch the projected balance recalculate in real time. The goal is to make low-stakes experimentation easy before high-stakes decisions become urgent.",
+      "The Forecast screen replaces the running balance with a forward-looking timeline. Projected income and committed expenses plot across 30, 60, and 90 days. Risk events appear as named markers on the timeline — not buried in a log. Drag an expense to a different date and the balance recalculates in real time.",
     annotations: [
       {
         label: "30/60/90 Horizon",
-        text: "Three time horizons in a single toggle. Zoom from next month's cash position to the end of the quarter without switching tools or building a spreadsheet.",
+        text: "Three time horizons in one toggle. Zoom from next month's cash position to end of quarter.",
       },
       {
         label: "Named Risk Events",
-        text: "Instead of abstract spikes on a chart, each risk is labelled: 'Payroll gap — 12 Aug', 'Invoice overdue — 14 Aug'. Named problems have owners and timelines. Abstract ones get ignored.",
+        text: "'Payroll gap — 12 Aug'. Named problems are solvable. Abstract spikes on a chart get ignored.",
       },
       {
         label: "What-If Simulation",
-        text: "Drag a committed expense forward or back in the timeline and the forecast recalculates instantly. Founders can test the impact of delaying a payment or pulling in revenue before committing.",
+        text: "Drag a committed expense earlier or later. The projected balance recalculates instantly.",
       },
     ],
   },
@@ -124,19 +124,19 @@ const screens: ScreenData[] = [
     tilt: 3,
     short: "Give your team spending power. Keep oversight without micromanaging.",
     detail:
-      "The Team screen is designed for the reality of a 2–10 person company: a handful of people who need cards, clear limits, and basic visibility. Each card shows the cardholder's name, their monthly limit, current spend, and status. Cards can be frozen, adjusted, or cancelled in one tap from the overview — no drilling into individual settings. Spend categories are configured per card, so the designer can buy software tools but not travel, without a weekly conversation about it. When a cardholder approaches their limit, both the founder and the cardholder receive a notification before a declined transaction surprises either of them.",
+      "Designed for a 2–10 person team. Each card shows the cardholder, their monthly limit, current spend, and status. Cards can be frozen, adjusted, or cancelled in one tap from the overview. Spend categories are set per card so limits are implicit, not conversational.",
     annotations: [
       {
         label: "Per-Card Limits",
-        text: "Set a monthly cap per cardholder. Approaching the limit triggers a notification to both the founder and the team member. No surprises at month end, no awkward reconciliation conversations.",
+        text: "Monthly cap per cardholder. Both founder and team member are notified when approaching the limit.",
       },
       {
         label: "Category Controls",
-        text: "Lock a card to specific spend categories — software, travel, client entertainment. Reduces accidental misuse without requiring a founder to approve every transaction manually.",
+        text: "Lock a card to specific spend types — software, travel, meals. No manual approval needed.",
       },
       {
         label: "One-Tap Freeze",
-        text: "Lost card, suspicious charge, team member leaving — freeze any card instantly from the team overview. No account settings navigation, no delay, no damage if it needs to happen at 11 pm.",
+        text: "Freeze any card instantly from the team overview. No navigation, no delay.",
       },
     ],
   },
@@ -148,19 +148,19 @@ const screens: ScreenData[] = [
     tilt: -4,
     short: "Invoice natively. Know exactly what you're owed, who has it, and when it arrives.",
     detail:
-      "The Invoices screen brings receivables inside the banking experience — no third-party tool required. Create, send, and track invoices from a single view. A status trail shows when an invoice was sent, when it was opened, and when it was paid: context that turns a follow-up call from awkward to informed. Overdue invoices surface at the top with a one-tap payment reminder, eliminating the email drafting that usually makes chasing feel like extra work. An Early Payment Offer lets founders propose a small discount for immediate settlement — a measured trade-off that dramatically improves cash timing when it matters most.",
+      "Invoicing lives inside the banking experience — no third-party tool required. Create, send, and track from a single view. A status trail shows when an invoice was sent, opened, and paid. Overdue invoices surface at the top with a one-tap reminder. An Early Payment Offer trades a small discount for immediate settlement.",
     annotations: [
       {
         label: "Status Trail",
-        text: "Sent → Opened → Paid. Knowing when a client viewed your invoice tells you whether to follow up with a call or wait another day. The trail gives context before the conversation.",
+        text: "Sent → Opened → Paid. Knowing when a client viewed your invoice tells you whether to follow up or wait.",
       },
       {
         label: "One-Tap Reminder",
-        text: "Overdue invoice? A single tap sends a polished, formatted payment reminder without drafting an email. Escalating templates for 7, 14, and 30 days overdue are built in.",
+        text: "A single tap sends a formatted payment reminder. Built-in escalation at 7, 14, and 30 days.",
       },
       {
         label: "Early Payment Offer",
-        text: "Offer a 1–3% discount for payment within 48 hours. A small trade-off that can turn a 30-day wait into same-week cash — the right tool when timing is the constraint, not the amount.",
+        text: "1–3% discount for payment within 48 hours. A small trade-off when cash timing matters.",
       },
     ],
   },
@@ -172,19 +172,19 @@ const screens: ScreenData[] = [
     tilt: 3,
     short: "Start without friction. Finish without confusion.",
     detail:
-      "The Setup screen uses progressive disclosure — show only the next step, not an overwhelming 20-field form. A visual progress bar breaks onboarding into five named stages: Identity, Business Details, Documents, Account Verification, and First Action. Each stage shows a clear estimated time and a short list of what you'll need before you start it. Completing a stage triggers a micro-celebration that makes progress feel tangible rather than bureaucratic. The system remembers exactly where you left off, so returning after a break means continuing, not restarting. The final step is a real business action — not a generic 'Get Started' screen — so setup completion equals genuine activation.",
+      "Progressive disclosure breaks onboarding into five named stages — each with an estimated time. You only see the current step. The system remembers where you stopped. The final step is a real business action, so setup completion equals genuine activation.",
     annotations: [
       {
         label: "Progressive Disclosure",
-        text: "Five named stages, each with a short time estimate. Founders only see the current step — breaking a complex process into five manageable moments prevents abandonment.",
+        text: "Five named stages, each with a time estimate. Founders only see the current step, not an overwhelming form.",
       },
       {
         label: "Progress Memory",
-        text: "Leave mid-setup and return later. The screen reopens at your exact stopping point with all previous inputs intact. No restarting, no frustration, no data re-entry.",
+        text: "Leave mid-setup and return later. The screen reopens exactly where you stopped.",
       },
       {
         label: "First Action Prompt",
-        text: "The final onboarding step is completing a real business action: receiving a payment, creating a Vault, or inviting a team member. Completion equals activation, not just registration.",
+        text: "Setup ends with a real action — receiving a payment, creating a Vault, or inviting a team member.",
       },
     ],
   },
@@ -236,7 +236,7 @@ function AnnotationItem({
           style={{
             width: "1px",
             flex: 1,
-            minHeight: "20px",
+            minHeight: "16px",
             background:
               "linear-gradient(to bottom, rgba(99,102,241,0.2), transparent)",
             marginTop: "5px",
@@ -289,10 +289,14 @@ function ScreenSection({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        position: "relative",
       }}
     >
-      <div style={{ transform: `rotate(${screen.tilt}deg)`, transformOrigin: "center center" }}>
+      <div
+        style={{
+          transform: `rotate(${screen.tilt}deg)`,
+          transformOrigin: "center center",
+        }}
+      >
         <Image
           src={screen.image}
           alt={screen.title}
@@ -352,7 +356,7 @@ function ScreenSection({
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6, delay: 0.16, ease }}
         style={{
-          fontSize: "0.98rem",
+          fontSize: "0.95rem",
           color: "#a3a3a3",
           lineHeight: 1.65,
           marginBottom: "24px",
@@ -402,7 +406,7 @@ function ScreenSection({
     <section
       style={{
         padding: "120px 24px",
-        borderTop: "1px solid #1f1f1f",
+        borderTop: "1px solid #1c1c1c",
         position: "relative",
         overflow: "hidden",
       }}
@@ -416,7 +420,7 @@ function ScreenSection({
           width: "560px",
           height: "560px",
           background:
-            "radial-gradient(circle, rgba(99,102,241,0.055), transparent 65%)",
+            "radial-gradient(circle, rgba(99,102,241,0.05), transparent 65%)",
           pointerEvents: "none",
           filter: "blur(48px)",
         }}
@@ -441,6 +445,21 @@ function ScreenSection({
       >
         {screen.num}
       </div>
+
+      {/* Vertical centre divider */}
+      <div
+        className="breakdown-vline"
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: 0,
+          bottom: 0,
+          width: "1px",
+          background: "#1c1c1c",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
 
       <div
         className="breakdown-grid"
@@ -474,7 +493,7 @@ export default function BreakdownPage() {
           background: "rgba(10,10,10,0.90)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
-          borderBottom: "1px solid #1a1a1a",
+          borderBottom: "1px solid #1c1c1c",
           padding: "0 24px",
           height: "60px",
           display: "flex",
@@ -524,6 +543,7 @@ export default function BreakdownPage() {
           position: "relative",
           overflow: "hidden",
           textAlign: "center",
+          borderBottom: "1px solid #1c1c1c",
         }}
       >
         <div
@@ -535,14 +555,19 @@ export default function BreakdownPage() {
             width: "700px",
             height: "400px",
             background:
-              "radial-gradient(ellipse, rgba(99,102,241,0.08), transparent 65%)",
+              "radial-gradient(ellipse, rgba(99,102,241,0.07), transparent 65%)",
             pointerEvents: "none",
             filter: "blur(40px)",
           }}
         />
 
         <div
-          style={{ maxWidth: "640px", margin: "0 auto", position: "relative", zIndex: 1 }}
+          style={{
+            maxWidth: "640px",
+            margin: "0 auto",
+            position: "relative",
+            zIndex: 1,
+          }}
         >
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -584,14 +609,13 @@ export default function BreakdownPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.22, ease }}
             style={{
-              fontSize: "0.98rem",
+              fontSize: "0.95rem",
               color: "#737373",
               lineHeight: 1.72,
             }}
           >
-            Seven screens. Each one chosen because founders lose time, miss
-            signals, or make calls on incomplete data without it. This is the
-            reasoning behind every decision.
+            Seven screens, each chosen because founders lose time, miss signals,
+            or make calls on incomplete data without it.
           </motion.p>
         </div>
       </section>
@@ -604,17 +628,30 @@ export default function BreakdownPage() {
       {/* Footer */}
       <footer
         style={{
-          borderTop: "1px solid #1f1f1f",
+          borderTop: "1px solid #1c1c1c",
           padding: "40px 24px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          maxWidth: "1200px",
-          margin: "0 auto",
+          maxWidth: "100%",
           flexWrap: "wrap",
           gap: "16px",
+          position: "relative",
         }}
       >
+        {/* Footer vertical line continuation */}
+        <div
+          className="breakdown-vline"
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: 0,
+            bottom: 0,
+            width: "1px",
+            background: "#1c1c1c",
+            pointerEvents: "none",
+          }}
+        />
         <span
           style={{
             fontSize: "0.65rem",
@@ -622,6 +659,8 @@ export default function BreakdownPage() {
             letterSpacing: "0.14em",
             textTransform: "uppercase",
             color: "rgba(255,255,255,0.2)",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           Revolut Business × HeadFavour
@@ -634,6 +673,8 @@ export default function BreakdownPage() {
             color: "#737373",
             textDecoration: "none",
             transition: "color 0.2s",
+            position: "relative",
+            zIndex: 1,
           }}
           onMouseEnter={(e) =>
             ((e.currentTarget as HTMLElement).style.color = "#fff")
@@ -651,6 +692,9 @@ export default function BreakdownPage() {
           .breakdown-grid {
             grid-template-columns: 1fr !important;
             gap: 48px !important;
+          }
+          .breakdown-vline {
+            display: none !important;
           }
         }
       `}</style>
