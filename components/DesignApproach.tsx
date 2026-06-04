@@ -7,8 +7,6 @@ import Link from "next/link";
 
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
-const MAILTO =
-  "mailto:mustaphafavour1@gmail.com?subject=Founder%20Mode%20Case%20Study%20%E2%80%94%20Revolut%20Business%20Concept&body=Hi%20Favour%2C%0A%0AI%20came%20across%20your%20Revolut%20Business%20Founder%20Mode%20concept%20and%20would%20love%20to%20learn%20more%20about%20the%20case%20study.%0A%0A";
 
 const screens: { label: string; image: string; tilt: number }[] = [
   { label: "Home",       image: "/images/home.png",       tilt: 3  },
@@ -187,32 +185,39 @@ export default function DesignApproach() {
             the interface.
           </motion.p>
 
-          <motion.a
-            href={MAILTO}
+          <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.55, delay: 0.35, ease }}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontSize: "0.85rem",
-              fontWeight: 600,
-              color: "#6366f1",
-              textDecoration: "none",
-              transition: "gap 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.gap = "12px";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.gap = "8px";
-            }}
           >
-            Reach out for more info
-            <span style={{ fontSize: "1rem" }}>→</span>
-          </motion.a>
+            <Link
+              href="/breakdown"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "12px 24px",
+                background: "#ffffff",
+                color: "#0a0a0a",
+                fontSize: "0.85rem",
+                fontWeight: 700,
+                borderRadius: "999px",
+                textDecoration: "none",
+                transition: "background 0.2s, transform 0.15s",
+                letterSpacing: "0.01em",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "#e5e5e5";
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.background = "#ffffff";
+                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              }}
+            >
+              View full breakdown
+            </Link>
+          </motion.div>
         </div>
       </div>
 
@@ -240,44 +245,6 @@ export default function DesignApproach() {
           />
         ))}
       </div>
-
-      {/* ── View breakdown link ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5, delay: 0.4, ease }}
-        style={{ maxWidth: "1200px", margin: "28px auto 0", textAlign: "center" }}
-      >
-        <Link
-          href="/breakdown"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            fontSize: "0.82rem",
-            fontWeight: 600,
-            color: "#6366f1",
-            textDecoration: "none",
-            padding: "10px 20px",
-            border: "1px solid rgba(99,102,241,0.25)",
-            borderRadius: "999px",
-            background: "rgba(99,102,241,0.06)",
-            transition: "background 0.2s, border-color 0.2s",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLElement).style.background = "rgba(99,102,241,0.12)";
-            (e.currentTarget as HTMLElement).style.borderColor = "rgba(99,102,241,0.5)";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLElement).style.background = "rgba(99,102,241,0.06)";
-            (e.currentTarget as HTMLElement).style.borderColor = "rgba(99,102,241,0.25)";
-          }}
-        >
-          View full breakdown
-          <span style={{ fontSize: "0.9rem" }}>→</span>
-        </Link>
-      </motion.div>
 
       {/* ── Large screen preview — centered in the section, same height as hero ── */}
       <AnimatePresence>
