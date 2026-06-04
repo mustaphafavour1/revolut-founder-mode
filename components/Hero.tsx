@@ -241,7 +241,7 @@ export default function Hero() {
               marginBottom: "40px",
             }}
           >
-            Smarter financial clarity for the people who actually own the thing.
+            For the founder still running the numbers, the product, and the team; before the first finance hire.
           </motion.p>
 
           <motion.div
