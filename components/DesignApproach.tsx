@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -239,6 +240,44 @@ export default function DesignApproach() {
           />
         ))}
       </div>
+
+      {/* ── View breakdown link ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.5, delay: 0.4, ease }}
+        style={{ maxWidth: "1200px", margin: "28px auto 0", textAlign: "center" }}
+      >
+        <Link
+          href="/breakdown"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            fontSize: "0.82rem",
+            fontWeight: 600,
+            color: "#6366f1",
+            textDecoration: "none",
+            padding: "10px 20px",
+            border: "1px solid rgba(99,102,241,0.25)",
+            borderRadius: "999px",
+            background: "rgba(99,102,241,0.06)",
+            transition: "background 0.2s, border-color 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.background = "rgba(99,102,241,0.12)";
+            (e.currentTarget as HTMLElement).style.borderColor = "rgba(99,102,241,0.5)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.background = "rgba(99,102,241,0.06)";
+            (e.currentTarget as HTMLElement).style.borderColor = "rgba(99,102,241,0.25)";
+          }}
+        >
+          View full breakdown
+          <span style={{ fontSize: "0.9rem" }}>→</span>
+        </Link>
+      </motion.div>
 
       {/* ── Large screen preview — centered in the section, same height as hero ── */}
       <AnimatePresence>
