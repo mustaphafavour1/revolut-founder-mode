@@ -1,18 +1,123 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
+
+const MAILTO =
+  "mailto:mustaphafavour1@gmail.com?subject=Founder%20Mode%20Case%20Study%20%E2%80%94%20Revolut%20Business%20Concept&body=Hi%20Favour%2C%0A%0AI%20came%20across%20your%20Revolut%20Business%20Founder%20Mode%20concept%20and%20would%20love%20to%20learn%20more%20about%20the%20case%20study.%0A%0A";
+
+const screens: { label: string; image: string; tilt: number }[] = [
+  { label: "Dashboard", image: "/images/home.png", tilt: 4 },
+  { label: "Payments", image: "/images/payments.png", tilt: -3 },
+  { label: "Vaults", image: "/images/vaults.png", tilt: 5 },
+  { label: "Forecast", image: "/images/cashflow.png", tilt: -4 },
+  { label: "Team", image: "/images/teamscards.png", tilt: 3 },
+  { label: "Invoices", image: "/images/invoices.png", tilt: -5 },
+  { label: "Onboarding", image: "/images/profile.png", tilt: 4 },
+];
+
+function ScreenPill({ label, image, tilt, delay }: { label: string; image: string; tilt: number; delay: number }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.4, delay, ease }}
+      style={{ position: "relative" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Pill */}
+      <div
+        style={{
+          background: hovered ? "#161616" : "#111111",
+          border: `1px solid ${hovered ? "#6366f1" : "#1f1f1f"}`,
+          borderRadius: "10px",
+          padding: "14px 8px",
+          textAlign: "center",
+          cursor: "default",
+          transition: "background 0.2s, border-color 0.2s",
+        }}
+      >
+        <div
+          style={{
+            width: "24px",
+            height: "3px",
+            background: "#6366f1",
+            borderRadius: "2px",
+            margin: "0 auto 8px",
+            opacity: hovered ? 1 : 0.6,
+            transition: "opacity 0.2s",
+          }}
+        />
+        <p
+          style={{
+            fontSize: "0.58rem",
+            color: hovered ? "#a3a3a3" : "#737373",
+            fontWeight: 500,
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            transition: "color 0.2s",
+          }}
+        >
+          {label}
+        </p>
+      </div>
+
+      {/* Hover image popover */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "calc(100% + 12px)",
+          left: "50%",
+          zIndex: 100,
+          pointerEvents: "none",
+        }}
+      >
+        <AnimatePresence>
+          {hovered && (
+            <motion.div
+              initial={{ opacity: 0, y: 8, scale: 0.88 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.88 }}
+              transition={{ duration: 0.2, ease }}
+              style={{
+                x: "-50%",
+                rotate: tilt,
+                transformOrigin: "bottom center",
+              }}
+            >
+              <Image
+                src={image}
+                alt={`${label} screen`}
+                width={130}
+                height={260}
+                style={{
+                  objectFit: "contain",
+                  display: "block",
+                  filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.8)) drop-shadow(0 0 1px rgba(255,255,255,0.08))",
+                }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function DesignApproach() {
   return (
     <section
-      style={{
-        padding: "96px 24px",
-        borderTop: "1px solid #1f1f1f",
-      }}
+      style={{ padding: "160px 24px", borderTop: "1px solid #1f1f1f" }}
     >
       <div
+        className="approach-grid"
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
@@ -20,8 +125,8 @@ export default function DesignApproach() {
           gridTemplateColumns: "1fr 1fr",
           gap: "80px",
           alignItems: "start",
+          marginBottom: "80px",
         }}
-        className="approach-grid"
       >
         {/* Left */}
         <div>
@@ -57,7 +162,7 @@ export default function DesignApproach() {
             Every screen has a job.
             <br />
             <span style={{ color: "#a3a3a3", fontWeight: 600 }}>
-              None of them are decorative.
+              None are decorative.
             </span>
           </motion.h2>
         </div>
@@ -76,10 +181,7 @@ export default function DesignApproach() {
               marginBottom: "20px",
             }}
           >
-            The 7 screens in this concept were chosen because they touch the
-            moments where founders lose time, miss signals or make bad calls
-            with incomplete information. Each one solves a specific failure —
-            not a general inconvenience.
+            7 screens chosen for the moments founders lose time, miss signals, or make calls on incomplete data. Each solves a specific failure.
           </motion.p>
 
           <motion.p
@@ -94,14 +196,11 @@ export default function DesignApproach() {
               marginBottom: "36px",
             }}
           >
-            The visual language stays inside Revolut&apos;s system. Dark
-            surfaces, confident typography, tight spacing. And I strongly
-            believe the best product design is invisible — you feel the clarity
-            before you notice the interface.
+            The visual language stays inside Revolut&apos;s system. The best product design is invisible — you feel the clarity before you notice the interface.
           </motion.p>
 
           <motion.a
-            href="#case-study"
+            href={MAILTO}
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
@@ -116,75 +215,29 @@ export default function DesignApproach() {
               textDecoration: "none",
               transition: "gap 0.2s",
             }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.gap = "12px";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.gap = "8px";
-            }}
+            onMouseEnter={(e) => { (e.currentTarget).style.gap = "12px"; }}
+            onMouseLeave={(e) => { (e.currentTarget).style.gap = "8px"; }}
           >
-            View Full Case Study
+            Reach out for more info
             <span style={{ fontSize: "1rem" }}>→</span>
           </motion.a>
         </div>
       </div>
 
-      {/* Decorative rule divider */}
+      {/* Screen pills with hover previews */}
       <div
+        className="screen-pills"
         style={{
           maxWidth: "1200px",
-          margin: "80px auto 0",
+          margin: "0 auto",
           display: "grid",
           gridTemplateColumns: "repeat(7, 1fr)",
           gap: "8px",
+          paddingBottom: "80px",
         }}
-        className="screen-pills"
       >
-        {[
-          "Dashboard",
-          "Payments",
-          "Vaults",
-          "Forecast",
-          "Team",
-          "Invoices",
-          "Onboarding",
-        ].map((label, i) => (
-          <motion.div
-            key={label}
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.4, delay: i * 0.06, ease }}
-            style={{
-              background: "#111111",
-              border: "1px solid #1f1f1f",
-              borderRadius: "8px",
-              padding: "12px 8px",
-              textAlign: "center",
-            }}
-          >
-            <div
-              style={{
-                width: "24px",
-                height: "3px",
-                background: "#6366f1",
-                borderRadius: "2px",
-                margin: "0 auto 8px",
-                opacity: 0.7,
-              }}
-            />
-            <p
-              style={{
-                fontSize: "0.6rem",
-                color: "#737373",
-                fontWeight: 500,
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-              }}
-            >
-              {label}
-            </p>
-          </motion.div>
+        {screens.map((s, i) => (
+          <ScreenPill key={s.label} label={s.label} image={s.image} tilt={s.tilt} delay={i * 0.06} />
         ))}
       </div>
 

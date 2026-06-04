@@ -96,7 +96,7 @@ export default function StatsBar() {
   return (
     <section
       style={{
-        padding: "96px 24px",
+        padding: "160px 24px",
         borderTop: "1px solid #1f1f1f",
         background: "#111111",
       }}
@@ -194,8 +194,7 @@ export default function StatsBar() {
             margin: "0 auto",
           }}
         >
-          The platform is growing fast. The gap between what SME founders need
-          and what they get is the next design opportunity.
+          The platform is growing. The gap between what founders need and what they get is the next design opportunity.
         </motion.p>
       </div>
 

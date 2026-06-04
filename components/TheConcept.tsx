@@ -76,7 +76,7 @@ export default function TheConcept() {
     <section
       id="concept"
       style={{
-        padding: "96px 24px",
+        padding: "160px 24px",
         borderTop: "1px solid #1f1f1f",
       }}
     >
@@ -142,10 +142,7 @@ export default function TheConcept() {
               maxWidth: "400px",
             }}
           >
-            Founder Mode doesn&apos;t replace what Revolut Business already
-            does well. It reshapes the experience around the person making the
-            decisions — one screen that knows what matters today, what&apos;s
-            at risk this week and what to do about it.
+            Founder Mode reshapes the experience around the person making the decisions — one screen that knows what matters today, what&apos;s at risk and what to do about it.
           </motion.p>
         </div>
 

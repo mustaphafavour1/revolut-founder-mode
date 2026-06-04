@@ -4,34 +4,34 @@ import { motion } from "framer-motion";
 
 const problems = [
   {
-    icon: "○",
     label: "Onboarding drops off early",
-    desc: "Complex verification with no clear progress signal.",
+    desc: "Complex verification, no clear progress signal.",
   },
   {
-    icon: "○",
     label: "Cash flow is invisible",
-    desc: "No forward view — just a running balance that tells you nothing.",
+    desc: "Just a running balance. No forward view.",
   },
   {
-    icon: "○",
     label: "Savings feel like an afterthought",
-    desc: "Vaults exist, but without intent, rules, or context.",
+    desc: "Vaults without intent, rules, or context.",
   },
 ];
 
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
+const desktopCardStyles: React.CSSProperties[] = [
+  { position: "absolute", top: 0, right: 0, transform: "rotate(1.5deg)" },
+  { position: "absolute", top: "160px", left: 0, transform: "rotate(-1deg)" },
+  { position: "absolute", bottom: 0, right: "60px", transform: "rotate(1.2deg)" },
+];
+
 export default function ProblemStatement() {
   return (
     <section
       id="problem"
-      style={{
-        padding: "96px 24px",
-        borderTop: "1px solid #1f1f1f",
-      }}
+      style={{ padding: "160px 24px", borderTop: "1px solid #1f1f1f" }}
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", textAlign: "center" }}>
         {/* Label */}
         <motion.p
           initial={{ opacity: 0, y: 12 }}
@@ -61,46 +61,49 @@ export default function ProblemStatement() {
             fontWeight: 800,
             lineHeight: 1.08,
             letterSpacing: "-0.03em",
-            marginBottom: "28px",
-            maxWidth: "600px",
+            marginBottom: "16px",
           }}
         >
           Revolut Business is built for scale.
-          <br />
-          <span style={{ color: "#a3a3a3", fontWeight: 600 }}>
-            Most founders aren&apos;t there yet.
-          </span>
         </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, delay: 0.18, ease }}
+          style={{
+            fontSize: "clamp(1.1rem, 2.5vw, 1.45rem)",
+            fontWeight: 600,
+            color: "#a3a3a3",
+            marginBottom: "24px",
+            lineHeight: 1.2,
+          }}
+        >
+          Most founders aren&apos;t there yet.
+        </motion.p>
 
         {/* Body */}
         <motion.p
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65, delay: 0.2, ease }}
+          transition={{ duration: 0.65, delay: 0.24, ease }}
           style={{
-            fontSize: "1rem",
-            color: "#a3a3a3",
-            lineHeight: 1.75,
-            maxWidth: "560px",
-            marginBottom: "56px",
+            fontSize: "0.95rem",
+            color: "#737373",
+            lineHeight: 1.7,
+            maxWidth: "480px",
+            margin: "0 auto",
           }}
         >
-          The tools exist. The multi-currency accounts, the team cards, the
-          integrations. But the experience is designed for the finance
-          controller, not the founder doing five things at once. Important
-          decisions get made on instinct because the clarity isn&apos;t there.
-          And that&apos;s a product problem worth solving.
+          The tools exist. But the experience is built for a finance controller, not a founder doing five things at once.
         </motion.p>
 
-        {/* Problem cards */}
+        {/* Desktop: scattered cards */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "16px",
-          }}
-          className="problem-grid"
+          className="problem-scatter"
+          style={{ position: "relative", height: "380px", marginTop: "72px" }}
         >
           {problems.map((p, i) => (
             <motion.div
@@ -108,59 +111,59 @@ export default function ProblemStatement() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: i * 0.1, ease }}
+              transition={{ duration: 0.55, delay: 0.1 + i * 0.12, ease }}
+              style={{
+                ...desktopCardStyles[i],
+                width: "240px",
+                background: "#111111",
+                border: "1px solid #1f1f1f",
+                borderLeft: "2px solid #ef444470",
+                borderRadius: "14px",
+                padding: "18px 20px",
+                textAlign: "left",
+              }}
+            >
+              <div
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  borderRadius: "50%",
+                  background: "#ef4444",
+                  marginBottom: "12px",
+                  opacity: 0.75,
+                }}
+              />
+              <p style={{ fontSize: "0.82rem", fontWeight: 600, color: "#fff", marginBottom: "6px", lineHeight: 1.3 }}>
+                {p.label}
+              </p>
+              <p style={{ fontSize: "0.75rem", color: "#737373", lineHeight: 1.6 }}>
+                {p.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Mobile: stacked cards */}
+        <div className="problem-stack" style={{ display: "none", flexDirection: "column", gap: "12px", marginTop: "48px" }}>
+          {problems.map((p, i) => (
+            <motion.div
+              key={p.label}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease }}
               style={{
                 background: "#111111",
                 border: "1px solid #1f1f1f",
-                borderRadius: "16px",
-                padding: "24px",
-                position: "relative",
-                overflow: "hidden",
+                borderLeft: "2px solid #ef444470",
+                borderRadius: "14px",
+                padding: "18px 20px",
+                textAlign: "left",
               }}
             >
-              {/* Red accent top line */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: "24px",
-                  right: "24px",
-                  height: "2px",
-                  background: "#ef4444",
-                  borderRadius: "0 0 4px 4px",
-                  opacity: 0.7,
-                }}
-              />
-              <div
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  background: "#ef4444",
-                  marginBottom: "14px",
-                  opacity: 0.8,
-                }}
-              />
-              <p
-                style={{
-                  fontSize: "0.85rem",
-                  fontWeight: 600,
-                  color: "#fff",
-                  marginBottom: "8px",
-                  lineHeight: 1.3,
-                }}
-              >
-                {p.label}
-              </p>
-              <p
-                style={{
-                  fontSize: "0.8rem",
-                  color: "#737373",
-                  lineHeight: 1.6,
-                }}
-              >
-                {p.desc}
-              </p>
+              <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#ef4444", marginBottom: "10px", opacity: 0.75 }} />
+              <p style={{ fontSize: "0.82rem", fontWeight: 600, color: "#fff", marginBottom: "6px", lineHeight: 1.3 }}>{p.label}</p>
+              <p style={{ fontSize: "0.75rem", color: "#737373", lineHeight: 1.6 }}>{p.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -168,8 +171,11 @@ export default function ProblemStatement() {
 
       <style>{`
         @media (max-width: 768px) {
-          .problem-grid {
-            grid-template-columns: 1fr !important;
+          .problem-scatter {
+            display: none !important;
+          }
+          .problem-stack {
+            display: flex !important;
           }
         }
       `}</style>

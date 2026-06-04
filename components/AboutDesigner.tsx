@@ -8,7 +8,7 @@ export default function AboutDesigner() {
   return (
     <section
       style={{
-        padding: "96px 24px",
+        padding: "160px 24px",
         borderTop: "1px solid #1f1f1f",
         background: "#111111",
       }}
@@ -73,11 +73,7 @@ export default function AboutDesigner() {
                 marginBottom: "40px",
               }}
             >
-              I&apos;m Favour — a digital designer and founder based in Lagos. I
-              build things at the intersection of design, engineering and product
-              thinking. MonieMatch, a micro-investment platform connecting
-              everyday investors with small businesses, is one of them. Founder
-              Mode is how I&apos;d fix the thing I&apos;ve felt missing.
+              I&apos;m Favour — designer and founder based in Lagos. I build at the intersection of design, engineering and product. MonieMatch is one of mine. Founder Mode is how I&apos;d fix the thing I&apos;ve felt missing.
             </motion.p>
 
             <motion.div

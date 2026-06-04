@@ -11,7 +11,7 @@ export default function FooterCTA() {
       <section
         id="case-study"
         style={{
-          padding: "120px 24px",
+          padding: "160px 24px",
           position: "relative",
           overflow: "hidden",
         }}
@@ -68,12 +68,11 @@ export default function FooterCTA() {
               marginBottom: "40px",
             }}
           >
-            The full case study covers the research, the decisions and the 7
-            screens in detail.
+            The full case study covers the research, the decisions and the 7 screens in detail.
           </motion.p>
 
           <motion.a
-            href="#"
+            href="mailto:mustaphafavour1@gmail.com?subject=Founder%20Mode%20Case%20Study%20%E2%80%94%20Revolut%20Business%20Concept&body=Hi%20Favour%2C%0A%0AI%20came%20across%20your%20Revolut%20Business%20Founder%20Mode%20concept%20and%20would%20love%20to%20learn%20more%20about%20the%20case%20study.%0A%0A"
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
@@ -103,7 +102,7 @@ export default function FooterCTA() {
                 "translateY(0)";
             }}
           >
-            Read the Case Study
+            Reach out for more info
           </motion.a>
         </div>
       </section>
@@ -138,7 +137,7 @@ export default function FooterCTA() {
           {[
             { label: "Portfolio", href: "#" },
             { label: "LinkedIn", href: "#" },
-            { label: "Email", href: "#" },
+            { label: "Email", href: "mailto:mustaphafavour1@gmail.com" },
           ].map((link) => (
             <a
               key={link.label}
