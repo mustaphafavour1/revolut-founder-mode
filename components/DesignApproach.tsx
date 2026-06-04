@@ -10,43 +10,41 @@ const MAILTO =
   "mailto:mustaphafavour1@gmail.com?subject=Founder%20Mode%20Case%20Study%20%E2%80%94%20Revolut%20Business%20Concept&body=Hi%20Favour%2C%0A%0AI%20came%20across%20your%20Revolut%20Business%20Founder%20Mode%20concept%20and%20would%20love%20to%20learn%20more%20about%20the%20case%20study.%0A%0A";
 
 const screens: { label: string; image: string; tilt: number }[] = [
-  { label: "Dashboard",   image: "/images/home.png",       tilt: 4  },
-  { label: "Payments",    image: "/images/payments.png",   tilt: -3 },
-  { label: "Vaults",      image: "/images/vaults.png",     tilt: 5  },
-  { label: "Forecast",    image: "/images/cashflow.png",   tilt: -4 },
-  { label: "Team",        image: "/images/teamscards.png", tilt: 3  },
-  { label: "Invoices",    image: "/images/invoices.png",   tilt: -5 },
-  { label: "Onboarding",  image: "/images/profile.png",    tilt: 4  },
+  { label: "Home",       image: "/images/home.png",       tilt: 3  },
+  { label: "Payments",   image: "/images/payments.png",   tilt: -3 },
+  { label: "Vaults",     image: "/images/vaults.png",     tilt: 4  },
+  { label: "Forecast",   image: "/images/cashflow.png",   tilt: -4 },
+  { label: "Team",       image: "/images/teamscards.png", tilt: 3  },
+  { label: "Invoices",   image: "/images/invoices.png",   tilt: -4 },
+  { label: "Onboarding", image: "/images/profile.png",    tilt: 3  },
 ];
 
 function ScreenPill({
   label,
-  image,
-  tilt,
   delay,
+  isActive,
+  onEnter,
+  onLeave,
 }: {
   label: string;
-  image: string;
-  tilt: number;
   delay: number;
+  isActive: boolean;
+  onEnter: () => void;
+  onLeave: () => void;
 }) {
-  const [hovered, setHovered] = useState(false);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.4, delay, ease }}
-      style={{ position: "relative" }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
     >
-      {/* Pill */}
       <div
         style={{
-          background: hovered ? "#161616" : "#111111",
-          border: `1px solid ${hovered ? "#6366f1" : "#1f1f1f"}`,
+          background: isActive ? "#161616" : "#111111",
+          border: `1px solid ${isActive ? "#6366f1" : "#1f1f1f"}`,
           borderRadius: "10px",
           padding: "14px 8px",
           textAlign: "center",
@@ -61,14 +59,14 @@ function ScreenPill({
             background: "#6366f1",
             borderRadius: "2px",
             margin: "0 auto 8px",
-            opacity: hovered ? 1 : 0.55,
+            opacity: isActive ? 1 : 0.5,
             transition: "opacity 0.2s",
           }}
         />
         <p
           style={{
             fontSize: "0.58rem",
-            color: hovered ? "#c0c0c0" : "#737373",
+            color: isActive ? "#c0c0c0" : "#737373",
             fontWeight: 500,
             letterSpacing: "0.06em",
             textTransform: "uppercase",
@@ -78,54 +76,15 @@ function ScreenPill({
           {label}
         </p>
       </div>
-
-      {/* Hover image popover — 65% of viewport height */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "calc(100% + 14px)",
-          left: "50%",
-          zIndex: 200,
-          pointerEvents: "none",
-        }}
-      >
-        <AnimatePresence>
-          {hovered && (
-            <motion.div
-              initial={{ opacity: 0, y: 10, scale: 0.88 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.88 }}
-              transition={{ duration: 0.22, ease }}
-              style={{
-                x: "-50%",
-                rotate: tilt,
-                transformOrigin: "bottom center",
-              }}
-            >
-              <Image
-                src={image}
-                alt={`${label} screen`}
-                width={400}
-                height={820}
-                style={{
-                  objectFit: "contain",
-                  display: "block",
-                  height: "clamp(320px, 65vh, 700px)",
-                  width: "auto",
-                  filter:
-                    "drop-shadow(0 24px 60px rgba(0,0,0,0.85)) drop-shadow(0 0 1px rgba(255,255,255,0.06))",
-                }}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
     </motion.div>
   );
 }
 
 export default function DesignApproach() {
-  // Preload all screen images so hover feels instant
+  const [hovered, setHovered] = useState<string | null>(null);
+  const active = screens.find((s) => s.label === hovered) ?? null;
+
+  // Preload all images on mount so first hover is instant
   useEffect(() => {
     screens.forEach(({ image }) => {
       const img = new window.Image();
@@ -134,7 +93,14 @@ export default function DesignApproach() {
   }, []);
 
   return (
-    <section style={{ padding: "160px 24px", borderTop: "1px solid #1f1f1f" }}>
+    <section
+      style={{
+        padding: "160px 24px",
+        borderTop: "1px solid #1f1f1f",
+        position: "relative",
+      }}
+    >
+      {/* ── Two-column intro text ── */}
       <div
         className="approach-grid"
         style={{
@@ -249,7 +215,7 @@ export default function DesignApproach() {
         </div>
       </div>
 
-      {/* Screen pills — hover reveals tilted screen preview */}
+      {/* ── Screen pills ── */}
       <div
         className="screen-pills"
         style={{
@@ -258,18 +224,60 @@ export default function DesignApproach() {
           display: "grid",
           gridTemplateColumns: "repeat(7, 1fr)",
           gap: "8px",
+          position: "relative",
+          zIndex: 1,
         }}
       >
         {screens.map((s, i) => (
           <ScreenPill
             key={s.label}
             label={s.label}
-            image={s.image}
-            tilt={s.tilt}
             delay={i * 0.06}
+            isActive={hovered === s.label}
+            onEnter={() => setHovered(s.label)}
+            onLeave={() => setHovered(null)}
           />
         ))}
       </div>
+
+      {/* ── Large screen preview — centered in the section, same height as hero ── */}
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            key={active.label}
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.92 }}
+            transition={{ duration: 0.22, ease }}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              x: "-50%",
+              y: "-50%",
+              zIndex: 10,
+              pointerEvents: "none",
+              rotate: active.tilt,
+              transformOrigin: "center center",
+            }}
+          >
+            <Image
+              src={active.image}
+              alt={active.label}
+              width={400}
+              height={820}
+              style={{
+                objectFit: "contain",
+                display: "block",
+                height: "clamp(480px, 75vh, 820px)",
+                width: "auto",
+                filter:
+                  "drop-shadow(0 40px 80px rgba(0,0,0,0.88)) drop-shadow(0 0 2px rgba(255,255,255,0.05))",
+              }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style>{`
         @media (max-width: 900px) {
